@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
@@ -9,93 +8,27 @@ namespace AlgorithmProblemDemo
 {
     public class Program
     {
-
-        Node head; // head of list
-
-        /* Linked list Node*/
-        class Node
+        public static void Main(string[] args)
         {
-            public int data;
-            public Node next;
-            public Node(int d)
-            {
-                data = d;
-                next = null;
-            }
-        }
 
-        /* function to insert a new_node in a list. */
-        void sortedInsert(Node new_node)
-        {
-            Node current;
-
-            /* Special case for head node */
-            if (head == null || head.data >= new_node.data)
+            string string1, rev;
+            Console.WriteLine("Enter the String to check is Palindrome or not ");
+            string1 = Console.ReadLine();
+            string s1 = string1.ToLower();
+            char[] ch = s1.ToCharArray();
+            Array.Reverse(ch);
+            rev = new string(ch);
+            bool b = s1.Equals(rev, StringComparison.OrdinalIgnoreCase);
+            if (b == true)
             {
-                new_node.next = head;
-                head = new_node;
+                Console.WriteLine("" + string1 + " is a Palindrome!");
             }
             else
             {
-
-                /* Locate the node before 
-                point of insertion. */
-                current = head;
-
-                while (current.next != null && current.next.data < new_node.data)
-                    current = current.next;
-
-                new_node.next = current.next;
-                current.next = new_node;
+                Console.WriteLine(" " + string1 + " is not a Palindrome!");
             }
-        }
+    
 
-        /*Utility functions*/
-
-        /* Function to create a node */
-        Node newNode(int data)
-        {
-            Node x = new Node(data);
-            return x;
-        }
-
-        /* Function to print linked list */
-        void printList()
-        {
-            Node temp = head;
-            while (temp != null)
-            {
-                Console.Write(temp.data + " ");
-                temp = temp.next;
-            }
-        }
-
-        /* Driver code */
-        public static void Main(String[] args)
-        {
-            LinkedList llist = new LinkedList();
-            Node new_node;
-
-            new_node = llist.newNode(5);
-            llist.sortedInsert(new_node);
-
-            new_node = llist.newNode(10);
-            llist.sortedInsert(new_node);
-
-            new_node = llist.newNode(7);
-            llist.sortedInsert(new_node);
-
-            new_node = llist.newNode(3);
-            llist.sortedInsert(new_node);
-
-            new_node = llist.newNode(1);
-            llist.sortedInsert(new_node);
-
-            new_node = llist.newNode(9);
-            llist.sortedInsert(new_node);
-
-            Console.WriteLine("Created Linked List");
-            llist.printList();
         }
     }
 }
