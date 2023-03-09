@@ -1,58 +1,42 @@
 ﻿using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmProblemDemo
 {
     public class Program
     {
-      
+        public static void BubbleSort<T>(T[] arr) where T : IComparable<T>
+        {
+            int n = arr.Length;
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    if (arr[j].CompareTo(arr[j + 1]) > 0)
+                    {
+                        T temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("Binary Sorted");
+            foreach (var p in arr)
+            {
+                Console.WriteLine(p);
+            }
+
+        }
         static void Main(string[] args)
         {
-            Console.Write("Enter the starting number: ");
-            int start = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter the ending number: ");
-            int end = int.Parse(Console.ReadLine());
-
-            for(int i = start; i <= end; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    Console.WriteLine("Prime Number : {0}",i);
-                }
-            }
-
-            Console.WriteLine("Palindrome numbers in the range [{0}, {1}]:", start, end);
-
-            for (int num = start; num <= end; num++)
-            {
-                if (IsPalindrome(num))
-                {
-                    Console.WriteLine(num);
-                }
-            }
+            int[] a = { 78, 55, 45, 98, 13 };
+            Program.BubbleSort(a);
         }
 
-        static bool IsPalindrome(int num)
-        {
-            int originalNum = num;
-            int reversedNum = 0;
-
-            while (num > 0)
-            {
-                int digit = num % 10;
-                reversedNum = reversedNum * 10 + digit;
-                num /= 10;
-            }
-
-            return originalNum == reversedNum;
-        }
     }
 }
+           
 
         
