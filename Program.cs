@@ -8,125 +8,94 @@ namespace AlgorithmProblemDemo
 {
     public class Program
     {
-        public class stack
+
+        class Bank
         {
-            public int top = -1;
-            public char[] items = new char[100];
-
-            public void push(char x)
+            string name, address;
+            char acc_type;
+            float balance;
+            // Function to open the account
+            public void open_account()
             {
-                if (top == 99)
-                {
-                    Console.WriteLine("Stack full");
-                }
-                else
-                {
-                    items[++top] = x;
-                }
+                name = "Aman Jhurani";
+                Console.WriteLine("Enter your full name: " + name);
+                address = "Surat";
+                Console.WriteLine("Enter your address: " + address);
+                acc_type = 'S';
+                Console.WriteLine(
+                    "What type of account you want to open saving(S) or Current(C): "
+                    + acc_type);
+                balance = 8000;
+                Console.WriteLine(
+                    "Enter How much money you want to deposit: "
+                    + balance);
+                Console.WriteLine("Account Created Successfully");
             }
 
-            char pop()
+            // Function to deposit the account
+            public void deposit_money()
             {
-                if (top == -1)
-                {
-                    Console.WriteLine("Underflow error");
-                    return '\0';
-                }
-                else
-                {
-                    char element = items[top];
-                    top--;
-                    return element;
-                }
+                int Amount = 9500;
+                Console.WriteLine(
+                    "Enter how much money you want to deposit: "
+                    + Amount);
+                balance += Amount;
+                Console.WriteLine("\nAvailable Balance: "
+                                  + balance);
             }
 
-            Boolean isEmpty()
+            // Function to withdraw the account
+            public void withdraw_money()
             {
-                return (top == -1) ? true : false;
+                float amount = 3200;
+                Console.WriteLine(
+                    "Enter how much money you want to withdraw: "
+                    + amount);
+                balance -= amount;
+                Console.WriteLine("\nAvailable balance: "
+                                  + balance);
+            }
+
+            // Function to display the account
+            public void display_account()
+            {
+                Console.WriteLine("Name: " + name);
+                Console.WriteLine("Address: " + address);
+                Console.WriteLine("Type: " + acc_type);
+                Console.WriteLine("Balance: " + balance + "\n");
             }
         }
-
-        // Returns true if character1 and character2
-        // are matching left and right brackets */
-        static Boolean isMatchingPair(char character1,
-                                      char character2)
+        public static void Main(string[] args)
         {
-            if (character1 == '(' && character2 == ')')
-                return true;
-            else if (character1 == '{' && character2 == '}')
-                return true;
-            else if (character1 == '[' && character2 == ']')
-                return true;
-            else
-                return false;
-        }
+            int choice;
+            // Creating Customer Object of Bank Class
+            Bank customer = new Bank();
 
-        // Return true if expression has balanced
-        // Brackets
-        static Boolean areBracketsBalanced(char[] exp)
-        {
-            // Declare an empty character stack */
-            Stack<char> st = new Stack<char>();
+            Console.WriteLine("\n1) Open account\n\n");
+            // Calling open_account() function through customer
+            // object.
+            customer.open_account();
+            Console.WriteLine("------------------------\n");
 
-            // Traverse the given expression to
-            //   check matching brackets
-            for (int i = 0; i < exp.Length; i++)
-            {
-                // If the exp[i] is a starting
-                // bracket then push it
-                if (exp[i] == '{' || exp[i] == '('
-                    || exp[i] == '[')
-                    st.Push(exp[i]);
+            Console.WriteLine("\n2) Deposit account\n\n");
+            // Calling deposit_money() function through customer
+            // object.
+            customer.deposit_money();
+            Console.WriteLine("------------------------\n");
 
-                //  If exp[i] is an ending bracket
-                //  then pop from stack and check if the
-                //   popped bracket is a matching pair
-                if (exp[i] == '}' || exp[i] == ')'
-                    || exp[i] == ']')
-                {
+            Console.WriteLine("\n2) Withdraw money\n\n");
+            // Calling withdraw_money() function through
+            // customer object.
+            customer.withdraw_money();
+            Console.WriteLine("------------------------\n");
 
-                    // If we see an ending bracket without
-                    //   a pair then return false
-                    if (st.Count == 0)
-                    {
-                        return false;
-                    }
+            Console.WriteLine("\n4) Display Account\n\n");
+            // Calling display_account() function through
+            // customer object.
+            customer.display_account();
+            Console.WriteLine("------------------------\n");
 
-                    // Pop the top element from stack, if
-                    // it is not a pair brackets of
-                    // character then there is a mismatch. This
-                    // happens for expressions like {(})
-                    else if (!isMatchingPair(st.Pop(),
-                                             exp[i]))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            // If there is something left in expression
-            // then there is a starting bracket without
-            // a closing bracket
-
-            if (st.Count == 0)
-                return true; // balanced
-            else
-            {
-                // not balanced
-                return false;
-            }
-        }
-
-        // Driver code
-        public static void Main(String[] args)
-        {
-            char[] exp = { '{', '(', ')', '}', '[', ']' };
-
-            // Function call
-            if (areBracketsBalanced(exp))
-                Console.WriteLine("Balanced ");
-            else
-                Console.WriteLine("Not Balanced ");
+            Console.ReadKey();
         }
     }
 }
