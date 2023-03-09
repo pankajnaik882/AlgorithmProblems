@@ -1,79 +1,36 @@
 ﻿using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
 
 namespace AlgorithmProblemDemo
 {
+
     public class Program
     {
-        static public void MainMerge(int[] numbers, int left, int mid, int right)
+        public static void DisplayAnagram()
         {
-            int[] temp = new int[25];
-            int i, eol, num, pos;
-            eol = (mid - 1);
-            pos = left;
-            num = (right - left + 1);
+            string str1 = "heater";
+            string str2 = "reheat";
+            char[] chr1 = str1.ToLower().ToCharArray();
+            char[] chr2 = str2.ToLower().ToCharArray();
 
-            while ((left <= eol) && (mid <= right))
+            Array.Sort(chr1);
+            Array.Sort(chr2);
+
+            string val1 = new string(chr1);
+            string val2 = new string(chr2);
+
+            if (val1 == val2)
             {
-                if (numbers[left] <= numbers[mid])
-                    temp[pos++] = numbers[left++];
-                else
-                    temp[pos++] = numbers[mid++];
+                Console.WriteLine("This is Anagram");
             }
-            while (left <= eol)
-                temp[pos++] = numbers[left++];
-            while (mid <= right)
-                temp[pos++] = numbers[mid++];
-            for (i = 0; i < num; i++)
+            else
             {
-                numbers[right] = temp[right];
-                right--;
+                Console.WriteLine("This is not Anagram");
             }
         }
-
-        static public void SortMerge(int[] numbers, int left, int right)
+        public static void Main(string[] args)
         {
-            int mid;
-            if (right > left)
-            {
-                mid = (right + left) / 2;
-                SortMerge(numbers, left, mid);
-                SortMerge(numbers, (mid + 1), right);
-                MainMerge(numbers, left, (mid + 1), right);
-            }
+            Program.DisplayAnagram();
         }
-
-        static void Main(string[] args)
-        {
-
-            Console.Write("\nProgram for sorting a numeric array using Merge Sorting");
-            Console.Write("\n\nEnter number of elements: ");
-            int max = Convert.ToInt32(Console.ReadLine());
-            int[] numbers = new int[max];
-            for (int i = 0; i < max; i++)
-            {
-                Console.Write("\nEnter [" + (i + 1).ToString() + "] element: ");
-                numbers[i] = Convert.ToInt32(Console.ReadLine());
-            }
-            Console.Write("Input int array : ");
-            Console.Write("\n");
-            for (int k = 0; k < max; k++)
-            {
-                Console.Write(numbers[k] + " ");
-                Console.Write("\n");
-            }
-            Console.WriteLine("MergeSort By Recursive Method");
-            SortMerge(numbers, 0, max - 1);
-            for (int i = 0; i < max; i++)
-                Console.WriteLine(numbers[i]);
-            Console.ReadLine();
-        }
-
     }
 }
-           
-
-        
