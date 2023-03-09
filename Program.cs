@@ -1,53 +1,58 @@
 ﻿using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmProblemDemo
 {
     public class Program
     {
-        public static void PrimeNumber()
+      
+        static void Main(string[] args)
         {
-            int num1, num2, i, j, flag;
+            Console.Write("Enter the starting number: ");
+            int start = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter Lowest of value between 0 to 1000 : ");
+            Console.Write("Enter the ending number: ");
+            int end = int.Parse(Console.ReadLine());
 
-            num1 = int.Parse(Console.ReadLine());
-
-
-            Console.WriteLine("Enter Lowest of value between 0 to 1000: ");
-
-
-            num2 = int.Parse(Console.ReadLine());
-
-
-            Console.WriteLine("Prime numbers between " +
-                              "{0} and {1} are: ", num1, num2);
-
-
-            for (i = num1; i <= num2; i++)
+            for(int i = start; i <= end; i++)
             {
-                if (i == 1 || i == 0)
-                    continue;
-                // flag variable to tell
-                // if i is prime or not
-                flag = 1;
-                for (j = 2; j <= i / 2; ++j)
+                if (i % 2 == 0)
                 {
-                    if (i % j == 0)
-                    {
-                        flag = 0;
-                        break;
-                    }
+                    continue;
                 }
-                // flag = 1 means i is prime
-                // and flag = 0 means i is not prime
-                if (flag == 1)
-                    Console.WriteLine(i);
+                else
+                {
+                    Console.WriteLine("Prime Number : {0}",i);
+                }
+            }
+
+            Console.WriteLine("Palindrome numbers in the range [{0}, {1}]:", start, end);
+
+            for (int num = start; num <= end; num++)
+            {
+                if (IsPalindrome(num))
+                {
+                    Console.WriteLine(num);
+                }
             }
         }
-        public static void Main(string[] args)
+
+        static bool IsPalindrome(int num)
         {
-            Program.PrimeNumber();
+            int originalNum = num;
+            int reversedNum = 0;
+
+            while (num > 0)
+            {
+                int digit = num % 10;
+                reversedNum = reversedNum * 10 + digit;
+                num /= 10;
+            }
+
+            return originalNum == reversedNum;
         }
     }
 }
+
+        
