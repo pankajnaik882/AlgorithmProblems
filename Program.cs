@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
@@ -8,50 +9,94 @@ namespace AlgorithmProblemDemo
 {
     public class Program
     {
-        public static void DisplayFname()
+
+        Node head; // head of list
+
+        /* Linked list Node*/
+        class Node
         {
-            string inputString = "<<name>> First Name ";
-            string firstName = "John"; // Replace with your first name
-
-            string outputString = Regex.Replace(inputString, "<<name>>", firstName);
-
-            Console.WriteLine(outputString);
-        }
-        public static void DisplayFullName()
-        {
-            string input = "Hello <<full name>>! How are you?";
-            string fullName = "John Doe"; // Replace this with the actual full name
-
-            string output = Regex.Replace(input, "<<full name>>", fullName);
-            Console.WriteLine(output); // Outputs: Hello John Doe! How are you?
-
+            public int data;
+            public Node next;
+            public Node(int d)
+            {
+                data = d;
+                next = null;
+            }
         }
 
-        public static void DisplayMobile()
+        /* function to insert a new_node in a list. */
+        void sortedInsert(Node new_node)
         {
-            string input = "My mobile number is 91-9876543210. ";
-            string contactNumber = "1234567890";
+            Node current;
 
-            string output = Regex.Replace(input, @"91-\d{10}", contactNumber);
-            Console.WriteLine(output);
+            /* Special case for head node */
+            if (head == null || head.data >= new_node.data)
+            {
+                new_node.next = head;
+                head = new_node;
+            }
+            else
+            {
+
+                /* Locate the node before 
+                point of insertion. */
+                current = head;
+
+                while (current.next != null && current.next.data < new_node.data)
+                    current = current.next;
+
+                new_node.next = current.next;
+                current.next = new_node;
+            }
         }
-        public static void DisplayCurrentDate()
+
+        /*Utility functions*/
+
+        /* Function to create a node */
+        Node newNode(int data)
         {
-            string input = "Today's date is 02/28/2023";
-            DateTime currentDate = DateTime.Now.Date;
-
-            string output = Regex.Replace(input, @"\d{2}/\d{2}/\d{4}", currentDate.ToString("MM/dd/yyyy"));
-            Console.WriteLine(output); // Outputs: Today's date is 02/28/2023. Please confirm the order by 02/28/2023.
+            Node x = new Node(data);
+            return x;
         }
 
-            static void Main(string[] args)
+        /* Function to print linked list */
+        void printList()
         {
-            Program.DisplayFname();
-            Program.DisplayFullName();
-            Program.DisplayMobile();
-            Program.DisplayCurrentDate();
+            Node temp = head;
+            while (temp != null)
+            {
+                Console.Write(temp.data + " ");
+                temp = temp.next;
+            }
         }
 
+        /* Driver code */
+        public static void Main(String[] args)
+        {
+            LinkedList llist = new LinkedList();
+            Node new_node;
+
+            new_node = llist.newNode(5);
+            llist.sortedInsert(new_node);
+
+            new_node = llist.newNode(10);
+            llist.sortedInsert(new_node);
+
+            new_node = llist.newNode(7);
+            llist.sortedInsert(new_node);
+
+            new_node = llist.newNode(3);
+            llist.sortedInsert(new_node);
+
+            new_node = llist.newNode(1);
+            llist.sortedInsert(new_node);
+
+            new_node = llist.newNode(9);
+            llist.sortedInsert(new_node);
+
+            Console.WriteLine("Created Linked List");
+            llist.printList();
+        }
     }
 }
            
