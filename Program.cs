@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
@@ -9,93 +10,55 @@ namespace AlgorithmProblemDemo
     public class Program
     {
 
-        class Bank
+        // HashSet to hold dictionary values
+        private static HashSet<string> dictionary = new HashSet<string>();
+
+
+        // Returns true if the word can be segmented into parts such
+        // that each part is contained in dictionary
+        public static bool wordBreak(string word)
         {
-            string name, address;
-            char acc_type;
-            float balance;
-            // Function to open the account
-            public void open_account()
+            int size = word.Length;
+
+            // Base case
+            if (size == 0)
+                return true;
+
+            // Else check for all words
+            for (int i = 1; i <= size; i++)
             {
-                name = "Aman Jhurani";
-                Console.WriteLine("Enter your full name: " + name);
-                address = "Surat";
-                Console.WriteLine("Enter your address: " + address);
-                acc_type = 'S';
-                Console.WriteLine(
-                    "What type of account you want to open saving(S) or Current(C): "
-                    + acc_type);
-                balance = 8000;
-                Console.WriteLine(
-                    "Enter How much money you want to deposit: "
-                    + balance);
-                Console.WriteLine("Account Created Successfully");
+                // Divide the word into two parts, the prefix will have a length of i
+                // and check if it is present in dictionary, if yes then we will check
+                // for suffix of length size-i recursively. If both prefix and
+                // suffix are present the word is found in dictionary.
+                if (dictionary.Contains(word.Substring(0, i)) &&
+                    wordBreak(word.Substring(i, size - i)))
+                    return true;
             }
 
-            // Function to deposit the account
-            public void deposit_money()
-            {
-                int Amount = 9500;
-                Console.WriteLine(
-                    "Enter how much money you want to deposit: "
-                    + Amount);
-                balance += Amount;
-                Console.WriteLine("\nAvailable Balance: "
-                                  + balance);
-            }
-
-            // Function to withdraw the account
-            public void withdraw_money()
-            {
-                float amount = 3200;
-                Console.WriteLine(
-                    "Enter how much money you want to withdraw: "
-                    + amount);
-                balance -= amount;
-                Console.WriteLine("\nAvailable balance: "
-                                  + balance);
-            }
-
-            // Function to display the account
-            public void display_account()
-            {
-                Console.WriteLine("Name: " + name);
-                Console.WriteLine("Address: " + address);
-                Console.WriteLine("Type: " + acc_type);
-                Console.WriteLine("Balance: " + balance + "\n");
-            }
+            // If all cases failed then return false
+            return false;
         }
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            int choice;
-            // Creating Customer Object of Bank Class
-            Bank customer = new Bank();
+            // Array of strings to be added in dictionary HashSet
+            string[] temp_dictionary = { "mobile", "samsung", "sam", "sung",
+                            "man", "mango", "icecream", "and",
+                            "go", "i", "like", "ice", "cream" };
 
-            Console.WriteLine("\n1) Open account\n\n");
-            // Calling open_account() function through customer
-            // object.
-            customer.open_account();
-            Console.WriteLine("------------------------\n");
+            // Loop to add all strings in dictionary HashSet
+            foreach (string temp in temp_dictionary)
+            {
+                dictionary.Add(temp);
+            }
 
-            Console.WriteLine("\n2) Deposit account\n\n");
-            // Calling deposit_money() function through customer
-            // object.
-            customer.deposit_money();
-            Console.WriteLine("------------------------\n");
-
-            Console.WriteLine("\n2) Withdraw money\n\n");
-            // Calling withdraw_money() function through
-            // customer object.
-            customer.withdraw_money();
-            Console.WriteLine("------------------------\n");
-
-            Console.WriteLine("\n4) Display Account\n\n");
-            // Calling display_account() function through
-            // customer object.
-            customer.display_account();
-            Console.WriteLine("------------------------\n");
-
-            Console.ReadKey();
+            // Sample input cases
+            Console.WriteLine(wordBreak("ilikesamsung"));
+            Console.WriteLine(wordBreak("iiiiiiii"));
+            Console.WriteLine(wordBreak(""));
+            Console.WriteLine(wordBreak("ilikelikeimangoiii"));
+            Console.WriteLine(wordBreak("samsungandmango"));
+            Console.WriteLine(wordBreak("samsungandmangok"));
         }
     }
 }
