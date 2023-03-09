@@ -7,50 +7,45 @@ namespace AlgorithmProblemDemo
    
     public class Program
     {
-        public static void Display(char[] arr)
+        public static void Display()
         {
-            foreach (char c in arr)
+            int[] arr = new int[5] { 23, 9, 85, 12, 99 };
+            int n = 5, i, j, val, flag;
+            Console.WriteLine("Intial Array");
+            for (i = 0; i < n; i++)
             {
-                Console.WriteLine(c + " ");
+                Console.WriteLine(arr[i]);
             }
+
+            for (i = 1; i < n; i++)
+            {
+                val = arr[i];
+                flag = 0;
+                for (j = i - 1; j >= 0 && flag != 1;)
+                {
+                    if (val < arr[j])
+                    {
+                        arr[j + 1] = arr[j];
+                        j--;
+                        arr[j + 1] = val;
+                    }
+                    else
+                    {
+                        flag = 1;
+                    }
+                }
+            }
+            Console.WriteLine("Sorted Array");
+            foreach (int p in arr)
+            {
+                Console.WriteLine(p);
+            }
+
+
         }
         public static void Main(string[] args)
         {
-            char[] arr = { 'e', 'c','d','e','f'};
-            
-            //For this method array will be sorted.
-            Array.Sort(arr);
-
-            Console.WriteLine("The Element of sorted array : ");
-
-            Display(arr);
-
-            object s = 'h';
-
-            result(arr, s);
-
-            object s1 = 'a';
-
-            result(arr, s1);
-            
+            Program.Display();
         }
-
-        public static void result(char[] arr2, object k)
-        {
-            int res = Array.BinarySearch(arr2, k);
-            if (res < 0)
-            {
-                Console.WriteLine("\nThe element to search for "
-                                + "({0}) is not found.",
-                            k);
-            }
-            else
-            {
-                Console.WriteLine("The element to search for "
-                                      + "({0}) is at index {1}.",
-                                  k, res);
-            }
-        }
-
     }
 }
